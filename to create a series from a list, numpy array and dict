@@ -1,0 +1,17 @@
+import pandas as pd
+import numpy as np
+
+# Create a Series from a list
+list_data = [10, 20, 30, 40]
+series_from_list = pd.Series(list_data)
+print("Series from List:\n", series_from_list)
+
+# Create a Series from a NumPy array
+numpy_data = np.array([5, 15, 25, 35])
+series_from_numpy = pd.Series(numpy_data)
+print("\nSeries from NumPy Array:\n", series_from_numpy)
+
+# Create a Series from a dictionary
+dict_data = {'x': 100, 'y': 200, 'z': 300}
+series_from_dict = pd.Series(dict_data)
+print("\nSeries from Dictionary:\n", series_from_dict)
