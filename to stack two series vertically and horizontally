@@ -1,0 +1,13 @@
+import pandas as pd
+
+# Create two Pandas Series
+series1 = pd.Series([1, 2, 3, 4])
+series2 = pd.Series([5, 6, 7, 8])
+
+# Stack vertically
+vertical_stack = pd.concat([series1, series2], axis=0)
+print("Vertical Stack:\n", vertical_stack)
+
+# Stack horizontally
+horizontal_stack = pd.concat([series1, series2], axis=1)
+print("\nHorizontal Stack:\n", horizontal_stack)
