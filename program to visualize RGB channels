@@ -1,0 +1,48 @@
+from PIL import Image
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Load the image
+image_path = r'C:\Users\ADMIN\OneDrive\Desktop\Marwadi\2 year\Sem 3\PWP\VS\MU.jpg'  # Replace with your image path
+image = Image.open(r'C:\Users\ADMIN\OneDrive\Desktop\Marwadi\2 year\Sem 3\PWP\VS\MU.jpg')
+
+# Convert to NumPy array
+image_np = np.array(image)
+
+# Split channels (Pillow uses RGB)
+R = image_np[:, :, 0]
+G = image_np[:, :, 1]
+B = image_np[:, :, 2]
+
+# Create images showing each channel in color
+zeros = np.zeros_like(R)
+
+red_img = np.stack([R, zeros, zeros], axis=2)
+green_img = np.stack([zeros, G, zeros], axis=2)
+blue_img = np.stack([zeros, zeros, B], axis=2)
+
+# Plot original and channels
+plt.figure(figsize=(12, 8))
+
+plt.subplot(2, 2, 1)
+plt.imshow(image_np)
+plt.title('Original Image')
+plt.axis('off')
+
+plt.subplot(2, 2, 2)
+plt.imshow(red_img)
+plt.title('Red Channel')
+plt.axis('off')
+
+plt.subplot(2, 2, 3)
+plt.imshow(green_img)
+plt.title('Green Channel')
+plt.axis('off')
+
+plt.subplot(2, 2, 4)
+plt.imshow(blue_img)
+plt.title('Blue Channel')
+plt.axis('off')
+
+plt.tight_layout()
+plt.show()
