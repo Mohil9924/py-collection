@@ -1,0 +1,31 @@
+from PIL import Image
+import numpy as np
+
+# Load the image
+image_path = r'C:\Users\ADMIN\OneDrive\Desktop\Marwadi\2 year\Sem 3\PWP\VS\MU.jpg'  # Replace with your image path
+image = Image.open(r'C:\Users\ADMIN\OneDrive\Desktop\Marwadi\2 year\Sem 3\PWP\VS\MU.jpg')
+
+# Convert to NumPy array
+image_np = np.array(image)
+
+# Define padding size (top, bottom, left, right)
+top, bottom, left, right = 50, 50, 30, 30
+
+# Create a new black image with padding
+new_height = image_np.shape[0] + top + bottom
+new_width = image_np.shape[1] + left + right
+
+# Check if image has channels (color) or grayscale
+if len(image_np.shape) == 3:
+    channels = image_np.shape[2]
+    padded_image_np = np.zeros((new_height, new_width, channels), dtype=image_np.dtype)
+else:
+    padded_image_np = np.zeros((new_height, new_width), dtype=image_np.dtype)
+
+# Place the original image in the center
+padded_image_np[top:top+image_np.shape[0], left:left+image_np.shape[1]] = image_np
+
+# Convert back to PIL Image and save
+padded_image = Image.fromarray(padded_image_np)
+padded_image.save('padded_image_pillow.jpg')
+print("Padding added and image saved as 'padded_image_pillow.jpg'.")
