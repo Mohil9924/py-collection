@@ -1,0 +1,4 @@
+filename="example.txt"
+with open(r"C:\Users\ADMIN\OneDrive\Desktop\Marwadi\2 year\Sem 3\PWP\Extra Docs\example.txt","r") as file:
+    lines=file.readlines()
+print(lines)
