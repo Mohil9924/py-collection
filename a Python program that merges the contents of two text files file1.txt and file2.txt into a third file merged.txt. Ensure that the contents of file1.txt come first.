@@ -1,0 +1,8 @@
+with open(r"C:\Users\ADMIN\OneDrive\Desktop\Marwadi\2 year\Sem 3\PWP\Extra Docs/file1.txt","r") as file1:
+    data1=file1.read()
+with open(r"C:\Users\ADMIN\OneDrive\Desktop\Marwadi\2 year\Sem 3\PWP\Extra Docs/file2.txt","r") as file2:
+    data2=file2.read()
+    
+with open("merged.txt","w") as merged:
+    merged.write(data1) 
+    merged.write(data2) 
