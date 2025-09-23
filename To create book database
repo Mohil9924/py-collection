@@ -1,0 +1,21 @@
+class book:  
+    def __init__(self , title, author, price):
+        self.title = title
+        self.author = author
+        self.price = price
+    def display_details(self):
+        print(f"Title: {self.title}, Author: {self.author}, Price: {self.price}")
+    def apply_discount(self, discount_percent):
+        self.price = self.price*(1*discount_percent/100)
+
+book1 = book("XYZ", "ABC", 1230)
+book2 = book("MNO", "PQR", 4567)
+print("Book 1 details:")
+book1.display_details()
+print("Book 2 details:")
+book2.display_details()
+
+book2.apply_discount(10)
+
+print("10% discount on book 2 is:")
+book2.display_details()
