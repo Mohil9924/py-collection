@@ -1,0 +1,6 @@
+import sympy as sp
+n, z = sp.symbols('n z')
+x_n = 3**n * sp.Heaviside(n)
+X_z = z / (z - 3)
+print("Z-transform of x[n]=3^n u[n]:")
+sp.pprint(X_z, use_unicode=True)
