@@ -1,0 +1,49 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import signal
+from scipy.io import wavfile
+def load_audio(fs=44100, duration=2.0):
+    t = np.linspace(0, duration, int(fs * duration), endpoint=False)
+    audio = (np.sin(2 * np.pi * 440 * t) + 0.5 * np.sin(2 * np.pi * 880 * t)) * np.exp(-t * 2)
+    return fs, audio
+def load_ir(fs=44100, duration=0.5):
+    t = np.linspace(0, duration, int(fs * duration), endpoint=False)
+    ir = np.exp(-t * 8) * np.sin(2 * np.pi * 1000 * t)
+    ir /= np.sqrt(np.sum(ir**2))
+    return fs, ir
+if __name__ == "__main__":
+    fs, x = load_audio()
+    _, h = load_ir(fs=fs)
+    y_linear = signal.convolve(x, h, mode='full')
+    N = len(x)
+    h_pad = np.pad(h, (0, N - len(h)))
+    X = np.fft.fft(x)
+    H = np.fft.fft(h_pad)
+    y_circ = np.real(np.fft.ifft(X * H))
+    y_circ_trunc = y_circ[:len(y_linear)]
+    plot_len = min(1024, len(y_linear))
+    time_axis = np.arange(plot_len) / fs
+    fig, axes = plt.subplots(4, 1, figsize=(12, 10))    
+    axes[0].plot(np.arange(plot_len) / fs, x[:plot_len])
+    axes[0].set_title('Original Audio')
+    axes[0].grid(True)
+    axes[1].plot(np.arange(min(512, len(h))) / fs, h[:min(512, len(h))])
+    axes[1].set_title('Impulse Response')
+    axes[1].grid(True)
+    axes[2].plot(time_axis, y_linear[:plot_len])
+    axes[2].set_title('Linear Convolution')
+    axes[2].grid(True)
+    axes[3].plot(time_axis, y_circ_trunc[:plot_len])
+    axes[3].set_title('Circular Convolution')
+    axes[3].set_xlabel('Time (s)')
+    axes[3].grid(True)
+    plt.tight_layout()
+    plt.show()
+    diff = y_linear[:plot_len] - y_circ_trunc[:plot_len]
+    plt.figure(figsize=(12, 4))
+    plt.plot(time_axis, diff)
+    plt.title('Difference: Linear - Circular')
+    plt.xlabel('Time (s)')
+    plt.grid(True)
+    plt.show()    
+    print("Linear convolution shows true effect; circular has wrap-around artifacts.")
